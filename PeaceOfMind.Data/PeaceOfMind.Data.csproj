@@ -58,6 +58,7 @@
     <Compile Include="Therapist.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rating.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

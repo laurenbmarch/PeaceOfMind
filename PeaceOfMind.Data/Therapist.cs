@@ -21,7 +21,7 @@ namespace PeaceOfMind.Data
         public string Gender { get; set; }
 
         [Required]
-        public string LicensureOrDegree { get; set; }
+        public string LicenseOrDegree { get; set; }
 
         [Required]
         public string AreaOfSpecialty { get; set; }
