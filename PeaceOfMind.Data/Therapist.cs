@@ -32,5 +32,7 @@ namespace PeaceOfMind.Data
         [Required]
         public double Rating { get; set; }
 
+        [Required]
+        public virtual RatingId RatingId { get; set; }
     }
 }
