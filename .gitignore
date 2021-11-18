@@ -13,6 +13,7 @@
 
 MigrationBackup/
 Migrations/ 
+web.confog/
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)

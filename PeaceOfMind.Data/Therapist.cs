@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PeaceOfMind.Data
 {
-    class Therapist
+    public class Therapist
     {
         [Key]
         public int Id { get; set; }
