@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using PeaceOfMind.WebApi.Providers;
 using PeaceOfMind.WebApi.Models;
+using PeaceOfMind.Data;
 
 namespace PeaceOfMind.WebApi
 {

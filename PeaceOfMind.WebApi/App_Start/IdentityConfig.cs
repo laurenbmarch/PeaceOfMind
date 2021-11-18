@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using PeaceOfMind.Data;
 using PeaceOfMind.WebApi.Models;
 
 namespace PeaceOfMind.WebApi
