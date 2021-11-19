@@ -8,6 +8,5 @@ namespace PeaceOfMind.Services
 {
     class TherapistService
     {
-        public bool CreateTherapist()
     }
 }
