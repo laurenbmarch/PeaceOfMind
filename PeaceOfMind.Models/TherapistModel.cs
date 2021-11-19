@@ -5,27 +5,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PeaceOfMind.Data
+namespace PeaceOfMind.Models
 {
-    public class Therapist
+    class TherapistModel
     {
-        [Key]
         public int Id { get; set; }
         [Required]
         public string LastName { get; set; }
         [Required]
         public string FirstName { get; set; }
+        [Required]
         public string Gender { get; set; }
         [Required]
         public string LicenseOrDegree { get; set; }
         [Required]
-        public string AreaOfSpecialty { get; set; }             
-        public virtual IEnumerable<OfficeLocations> ListOfOffices { get; set; }
-        public Therapist()
-        {
-            ListOfOffices = new HashSet<OfficeLocations>();
-        }
-        public double Rating { get; set; }
-        public virtual Rating RatingId { get; set; }
+        public string AreaOfSpecialty { get; set; }
+        
     }
 }
