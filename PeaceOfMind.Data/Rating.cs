@@ -7,25 +7,25 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PeaceOfMind.Data
-{  
-        public class Rating
-        {
-            [Key]
-            public Guid Id { get; set; }
-            [Required, ForeignKey(nameof(Therapist))]
-            public Guid TherapistId { get; set; }
-            public virtual Therapist Therapist { get; set; }
-            [Required]
-            public int Professionalism { get; set; }
-            [Required]
-            public int Communication { get; set; }
-            [Required]
-            public int Effectiveness { get; set; }
-            [Required]
-            public int Avaliability { get; set; }
-            [Required]
-            public decimal AverageRating { get; set; }
+{
+    public class Rating
+    {
+        [Key]
+        public int Id { get; set; }
+        [Required, ForeignKey(nameof(Therapist))]
+        public int TherapistId { get; set; }
+        public virtual Therapist Therapist { get; set; }
+        [Required]
+        public int Professionalism { get; set; }
+        [Required]
+        public int Communication { get; set; }
+        [Required]
+        public int Effectiveness { get; set; }
+        [Required]
+        public int Avaliability { get; set; }
+        [Required]
+        public decimal AverageRating { get; set; }
 
-        }
+    }
 }
 

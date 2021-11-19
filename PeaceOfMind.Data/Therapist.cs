@@ -10,32 +10,23 @@ namespace PeaceOfMind.Data
     public class Therapist
     {
         [Key]
-        public Guid Id { get; set; }
-
+        public int Id { get; set; }
         [Required]
         public string LastName { get; set; }
-
         [Required]
         public string FirstName { get; set; }
-
         public string Gender { get; set; }
-
         [Required]
         public string LicenseOrDegree { get; set; }
-
         [Required]
-        public string AreaOfSpecialty { get; set; }
-
-             
+        public string AreaOfSpecialty { get; set; }             
         public virtual IEnumerable<OfficeLocations> ListOfOffices { get; set; }
         public Therapist()
         {
             ListOfOffices = new HashSet<OfficeLocations>();
         }
-
         [Required]
         public double Rating { get; set; }
-
         [Required]
         public virtual Rating RatingId { get; set; }
     }
