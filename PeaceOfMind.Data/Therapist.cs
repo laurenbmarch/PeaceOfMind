@@ -27,7 +27,7 @@ namespace PeaceOfMind.Data
         public string AreaOfSpecialty { get; set; }
 
         [Required]
-        public string OfficeLocation { get; set; }
+        public virtual OfficeLocations OfficeLocation { get; set; }
 
         [Required]
         public double Rating { get; set; }
