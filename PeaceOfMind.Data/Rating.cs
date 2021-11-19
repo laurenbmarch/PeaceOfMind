@@ -11,9 +11,9 @@ namespace PeaceOfMind.Data
     public class Rating
     {
         [Key]
-        public int Id { get; set; }
-        [Required, ForeignKey(nameof(Therapist))]
-        public int TherapistId { get; set; }
+        public Guid Id { get; set; }
+        [ForeignKey(nameof(Therapist))]
+        public Guid TherapistId { get; set; }
         public virtual Therapist Therapist { get; set; }
         [Required]
         public int Professionalism { get; set; }
