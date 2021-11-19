@@ -26,13 +26,17 @@ namespace PeaceOfMind.Data
         [Required]
         public string AreaOfSpecialty { get; set; }
 
-        [Required]
-        public string OfficeLocation { get; set; }
+             
+        public virtual IEnumerable<OfficeLocations> ListOfOffices { get; set; }
+        public Therapist()
+        {
+            ListOfOffices = new HashSet<OfficeLocations>();
+        }
 
         [Required]
         public double Rating { get; set; }
 
         [Required]
-        public virtual RatingId RatingId { get; set; }
+        public virtual Rating RatingId { get; set; }
     }
 }

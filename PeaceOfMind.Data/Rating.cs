@@ -7,9 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace PeaceOfMind.Data
-{
-    class TherapistRating
-    {
+{  
         public class Rating
         {
             [Key]
@@ -29,5 +27,5 @@ namespace PeaceOfMind.Data
             public decimal AverageRating { get; set; }
 
         }
-    }
 }
+
