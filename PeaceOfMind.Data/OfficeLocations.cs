@@ -10,11 +10,12 @@ namespace PeaceOfMind.Data
     public class OfficeLocations
     {
         [Key]
-        public Guid Id { get; set; }
-        [Required]
-        public Guid TherapistId { get; set; }
-
-        public virtual IEnumerable<Therapist>  Therapists {get; set;}
+        public int  Id { get; set; }
+        public virtual IEnumerable<Therapist>  ListOfTherapists {get; set;}
+        public OfficeLocations()
+        {
+            ListOfTherapists = new HashSet<Therapist>();
+        }
         [Required]
         public int AddressNumber { get; set; }
         [Required]
