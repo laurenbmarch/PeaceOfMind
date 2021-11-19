@@ -9,8 +9,7 @@ namespace PeaceOfMind.Models
 {
     public class OfficeLocationModel
     {
-        public int Id { get; set; }
-        [Required]
+        public Guid Id { get; set; }        
         public int AddressNumber { get; set; }
         public string StreetName { get; set; }
         public string City { get; set; }

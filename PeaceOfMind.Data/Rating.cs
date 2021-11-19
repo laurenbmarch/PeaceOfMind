@@ -11,6 +11,7 @@ namespace PeaceOfMind.Data
     public class Rating
     {
         [Key]
+
         public Guid Id { get; set; }
         [ForeignKey(nameof(Therapist))]
         public Guid TherapistId { get; set; }
