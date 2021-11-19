@@ -17,7 +17,7 @@ namespace PeaceOfMind.Models
        public int Effectiveness { get; set; }
        [Required]
        public int Avaliability { get; set; }
-       [Required]
-       public decimal AverageRating { get; set; }
+
+       public decimal AverageRating { get { return Professionalism + Communication + Effectiveness + Avaliability / 4; } }
     }
 }

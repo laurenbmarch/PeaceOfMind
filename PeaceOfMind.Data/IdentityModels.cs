@@ -29,6 +29,9 @@ namespace PeaceOfMind.Data
         {
             return new ApplicationDbContext();
         }
-        public DbSet<OfficeLocations> OfficeLocations { get; set; }
+
+        public DbSet<OfficeLocations> OfficeLocations { get; set; }        
+        public DbSet<Rating> Rating { get; set; }
+
     }
 }
