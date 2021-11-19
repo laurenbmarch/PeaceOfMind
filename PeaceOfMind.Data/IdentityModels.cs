@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -28,5 +29,7 @@ namespace PeaceOfMind.Data
         {
             return new ApplicationDbContext();
         }
+        
+        public DbSet<Rating> Rating { get; set; }
     }
 }
