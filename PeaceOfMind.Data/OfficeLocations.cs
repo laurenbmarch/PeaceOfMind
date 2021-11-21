@@ -9,8 +9,8 @@ namespace PeaceOfMind.Data
 {
     public class OfficeLocations
     {
-        [Key]
-        public int OfficeLocationId { get; set; }        
+        [Key]           
+        public int OfficeLocationId { get; set; }
         public Guid  Id { get; set; }
         public virtual IEnumerable<Therapist>  ListOfTherapists {get; set;}
         public OfficeLocations()

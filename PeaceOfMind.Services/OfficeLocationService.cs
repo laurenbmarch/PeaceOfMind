@@ -35,7 +35,7 @@ namespace PeaceOfMind.Services
                 return context.SaveChanges() == 1;
             }
         }
-        public IEnumerable<OfficeLocationModel> GetOfficeLocations()
+        public IEnumerable<OfficeLocationGetItem> GetOfficeLocations()
         {
             using (var context = new ApplicationDbContext())
             {
@@ -45,8 +45,9 @@ namespace PeaceOfMind.Services
                         .Where(e => e.Id == _id)
                         .Select(
                         e =>
-                            new OfficeLocationModel
+                            new OfficeLocationGetItem
                             {
+                                OfficeLocationId = e.OfficeLocationId,
                                 AddressNumber = e.AddressNumber,
                                 StreetName = e.StreetName,
                                 City = e.City,
