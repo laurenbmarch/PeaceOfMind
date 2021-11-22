@@ -96,5 +96,17 @@ namespace PeaceOfMind.Services
                 return context.SaveChanges() == 1;
             }
         }
+        public bool RemoveOfficeLocation(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .OfficeLocations
+                        .Single(e => e.OfficeLocationId == id && e.Id == _id);
+                ctx.OfficeLocations.Remove(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
