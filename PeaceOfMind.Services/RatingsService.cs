@@ -9,12 +9,11 @@ using System.Web.Http;
 
 namespace PeaceOfMind.Services
 {
-   public class RatingsService
+    public class RatingsService
     {
         private readonly Guid _id;
         public RatingsService(Guid id)
-        {
-            _id ++;
+        {            
             _id = id;
         }
         public bool CreateRating(RatingsModel model)
@@ -26,28 +25,12 @@ namespace PeaceOfMind.Services
                 Effectiveness = model.Effectiveness,
                 Avaliability = model.Avaliability
             };
-            using(var context = new ApplicationDbContext())
+            using (var context = new ApplicationDbContext())
             {
                 context.Rating.Add(entity);
                 return context.SaveChanges() == 1;
             }
         }
-        public IEnumerable<RatingsModel> GetRatings()
-        {
-            using (var context = new ApplicationDbContext())
-            {
-                var query =
-                    context
-                            .Rating
-                            .Where(e => e.Id == _id) ;
-                            .Select(
-                             e=>
-                                new RatingsModel
-                                {
-
-                                }
-                             )
-            }
-        }
     }
 }
+

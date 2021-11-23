@@ -35,7 +35,7 @@ namespace PeaceOfMind.Services
                 return context.SaveChanges() == 1;
             }
         }
-        public IEnumerable<OfficeLocationModel> GetOfficeLocations()
+        public IEnumerable<OfficeLocationGetItem> GetOfficeLocations()
         {
             using (var context = new ApplicationDbContext())
             {
@@ -45,8 +45,9 @@ namespace PeaceOfMind.Services
                         .Where(e => e.Id == _id)
                         .Select(
                         e =>
-                            new OfficeLocationModel
+                            new OfficeLocationGetItem
                             {
+                                OfficeLocationId = e.OfficeLocationId,
                                 AddressNumber = e.AddressNumber,
                                 StreetName = e.StreetName,
                                 City = e.City,
@@ -93,6 +94,18 @@ namespace PeaceOfMind.Services
                 entity.ZipCode = updateModel.ZipCode;
                 entity.Country = updateModel.Country;
                 return context.SaveChanges() == 1;
+            }
+        }        
+        public bool RemoveOfficeLocation(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .OfficeLocations
+                        .Single(e => e.OfficeLocationId == id && e.Id == _id);
+                ctx.OfficeLocations.Remove(entity);
+                return ctx.SaveChanges() == 1;
             }
         }
     }
