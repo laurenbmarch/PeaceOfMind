@@ -95,7 +95,7 @@ namespace PeaceOfMind.Services
                 entity.Country = updateModel.Country;
                 return context.SaveChanges() == 1;
             }
-        }
+        }        
         public bool RemoveOfficeLocation(int id)
         {
             using (var ctx = new ApplicationDbContext())
