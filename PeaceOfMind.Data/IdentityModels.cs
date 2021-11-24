@@ -32,6 +32,7 @@ namespace PeaceOfMind.Data
 
         public DbSet<OfficeLocations> OfficeLocations { get; set; }        
         public DbSet<Rating> Rating { get; set; }
+        public DbSet<Therapist> Therapist { get; set; } 
 
     }
 }
