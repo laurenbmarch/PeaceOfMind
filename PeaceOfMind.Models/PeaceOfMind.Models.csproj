@@ -45,6 +45,7 @@
     <Compile Include="OfficeLocationGetItem.cs" />
     <Compile Include="OfficeLocationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingsGetItem.cs" />
     <Compile Include="RatingsModel.cs" />
     <Compile Include="TherapistModel.cs" />
   </ItemGroup>
