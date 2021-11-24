@@ -46,6 +46,7 @@
     <Compile Include="OfficeLocationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RatingsModel.cs" />
+    <Compile Include="TherapistGetItem.cs" />
     <Compile Include="TherapistModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,6 +10,7 @@ namespace PeaceOfMind.Data
     public class Therapist
     {
         [Key]
+        public int TherapistId { get; set; }
         public Guid Id { get; set; }
         [Required]
         public string LastName { get; set; }

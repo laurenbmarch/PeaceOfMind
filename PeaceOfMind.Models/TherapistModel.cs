@@ -10,6 +10,7 @@ namespace PeaceOfMind.Models
     public class TherapistModel
     {
         public int Id { get; set; }
+
         [Required]
         public string LastName { get; set; }
         [Required]

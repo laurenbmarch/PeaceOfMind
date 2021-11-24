@@ -35,6 +35,74 @@ namespace PeaceOfMind.Services
                 return ctx.SaveChanges() == 1;
             }
         }
+        public IEnumerable<TherapistGetItem> GetTherapist()
+        {
+            using (var context = new ApplicationDbContext())
+            {
+                var query =
+                    context
+                        .Therapist
+                        .Where(e => e.Id == _id)
+                        .Select(
+                        e =>
+                            new TherapistGetItem
+                            {
+                                TherapistId = e.TherapistId,
+                                LastName = e.LastName,
+                                FirstName = e.FirstName
+                            }
+                        );
+                return query.ToArray();
+            }
+        }
+
+        public TherapistModel GetTherapistById(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Therapist
+                        .Single(e => e.TherapistId == id && e.Id == _id);
+                return
+                    new TherapistModel
+                    {
+                        LastName = entity.LastName,
+                        FirstName = entity.FirstName,
+                        Gender = entity.Gender,
+                        LicenseOrDegree = entity.LicenseOrDegree,
+                        AreaOfSpecialty = entity.AreaOfSpecialty
+                    };
+            }
+        }
+        public bool UpdateTherapist(int id, TherapistModel updatedModel)
+        {
+            using(var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                        .Therapist
+                        .Single(e => e.TherapistId == id && e.Id == _id);
+                entity.LastName = updatedModel.LastName;
+                entity.FirstName = updatedModel.FirstName;
+                entity.Gender = updatedModel.Gender;
+                entity.LicenseOrDegree = updatedModel.LicenseOrDegree;
+                entity.AreaOfSpecialty = updatedModel.AreaOfSpecialty;
+                return ctx.SaveChanges() == 1;
+            }
+        }
+        public bool RemoveTherapist(int id)
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var entity =
+                    ctx
+                    .Therapist
+                    .Single(e => e.TherapistId == id && e.Id == _id);
+                ctx.Therapist.Remove(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
 
     }
 }

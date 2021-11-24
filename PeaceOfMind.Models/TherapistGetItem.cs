@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace PeaceOfMind.Models
 {
-    class TherapistGetItem
+    public class TherapistGetItem
     {
+        public int TherapistId { get; set; }
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        
     }
 }
