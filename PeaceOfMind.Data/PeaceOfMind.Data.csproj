@@ -54,9 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202111211505183_OfficeLocationPostTest3.cs" />
-    <Compile Include="Migrations\202111211505183_OfficeLocationPostTest3.Designer.cs">
-      <DependentUpon>202111211505183_OfficeLocationPostTest3.cs</DependentUpon>
+    <Compile Include="Migrations\202112022316174_firstMigration.cs" />
+    <Compile Include="Migrations\202112022316174_firstMigration.Designer.cs">
+      <DependentUpon>202112022316174_firstMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OfficeLocations.cs" />
@@ -70,8 +70,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202111211505183_OfficeLocationPostTest3.resx">
-      <DependentUpon>202111211505183_OfficeLocationPostTest3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112022316174_firstMigration.resx">
+      <DependentUpon>202112022316174_firstMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
