@@ -39,7 +39,7 @@ Each therapist can be connected to a table with details of their physical office
 * Country
 
 ## :microscope: Testing the API
-We used Postman to test our project and identify areas in need of debugging. Our biggest challenge was trying to find a 
+We used Postman to test our project and identify areas in need of debugging. Our biggest challenge included finding a way to connect individual therapsits to one or more office locations. We eventually created another table called 
 
 
 
