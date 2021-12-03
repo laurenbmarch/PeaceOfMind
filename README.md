@@ -3,7 +3,7 @@
 
 The Blue Badge API Project is a group project designed by Eleven Fifty Academy to evaluate students' progress in the Software Development program. The assignment was to build a .NET Framework API Web Application using n-tier architecture covering a topic of our group's choosing. The API needed to include at least one custom table per group member, with at least one of the tables implementing Foreign Key relationships.
 
-My group created an application called "Peace of Mind". "Peace of Mind" is a tool that allows a user to access a database of mental health experts and therapists. They can correspond with a therapist to schedule time to meet in-person or virtually. Users can also search through the application to locate local experts in the field. The target audience is for adults who are looking for professional assistance with their mental health.
+Our group created an application called "Peace of Mind". "Peace of Mind" is a tool that allows a user to access a database of mental health experts and therapists. They can correspond with a therapist to schedule time to meet in-person or virtually. Users can also search through the application to locate local experts in the field. The target audience is for adults who are looking for professional assistance with their mental health.
  
 We chose this project because there is an increasing awareness about the subject mental health in our day to day lives. Individuals are prioritizing their mental health more than ever before and this app would be a tool to help individuals access mental health professionals in a convenient and private way.
 
@@ -37,6 +37,9 @@ Each therapist can be connected to a table with details of their physical office
 * State
 * Zip Code
 * Country
+
+## :microscope: Testing the API
+We used Postman to test our project and identify areas in need of debugging. Our biggest challenge was trying to find a 
 
 
 
