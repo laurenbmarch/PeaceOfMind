@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PeaceOfMind.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace PeaceOfMind.Models
 {
     public class OfficeLocationGetItem
     {
-       public int OfficeLocationId { get; set; }
+        public int OfficeLocationId { get; set; }
+        public int TherapistCount { get; set; }
         public int AddressNumber { get; set; }    
         public string StreetName { get; set; } 
         public string City { get; set; }

@@ -14,7 +14,7 @@ namespace PeaceOfMind.Data
         public int RatingsId { get; set; }
         
         [ForeignKey("Therapist")]
-        public Guid Id { get; set; }        
+        public int TherapistId { get; set; }        
         public virtual Therapist Therapist { get; set; }
         [Required]
         public int Professionalism { get; set; }
@@ -26,7 +26,7 @@ namespace PeaceOfMind.Data
         public int Avaliability { get; set; }
         [Required]
         public decimal AverageRating { get; set; }
-
+      
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace PeaceOfMind.Data
 {
-    public class OfficeLocations
+    public class OfficeLocation
     {
         [Key]           
         public int OfficeLocationId { get; set; }
-        public Guid  Id { get; set; }
-        public virtual IEnumerable<Therapist>  ListOfTherapists {get; set;}
-        public OfficeLocations()
+        //public Guid  Id { get; set; }
+        [JsonIgnore]
+        public virtual HashSet<Therapist>  ListOfTherapists {get; set;}
+        public OfficeLocation()
         {
             ListOfTherapists = new HashSet<Therapist>();
         }

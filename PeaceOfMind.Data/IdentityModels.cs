@@ -30,7 +30,7 @@ namespace PeaceOfMind.Data
             return new ApplicationDbContext();
         }
 
-        public DbSet<OfficeLocations> OfficeLocations { get; set; }        
+        public DbSet<OfficeLocation> OfficeLocations { get; set; }        
         public DbSet<Rating> Rating { get; set; }
         public DbSet<Therapist> Therapist { get; set; } 
 

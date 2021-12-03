@@ -14,7 +14,7 @@ namespace PeaceOfMind.WebApi.Controllers
     [Authorize]
     public class RatingsController : ApiController
     {
-        private RatingsService CreateRatingService()
+        /*private RatingsService CreateRatingService()
         {
             var Id = Guid.Parse(User.Identity.GetUserId());
             var ingredientService = new RatingsService(Id);
@@ -55,6 +55,6 @@ namespace PeaceOfMind.WebApi.Controllers
             return Ok();
 
         }
-
+        */
     }
 }

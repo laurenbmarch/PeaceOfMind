@@ -11,7 +11,7 @@ namespace PeaceOfMind.Services
 {
     public class RatingsService
     {
-        private readonly Guid _id;
+       /* private readonly Guid _id;
         public RatingsService(Guid Id)
         {            
             _id = Id;
@@ -92,7 +92,7 @@ namespace PeaceOfMind.Services
             }
         }
 
-
+        */
     }
 }
 
