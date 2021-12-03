@@ -13,14 +13,14 @@ namespace PeaceOfMind.Services
     {
         private readonly Guid _id;
         public RatingsService(Guid Id)
-        {            
+        {
             _id = Id;
         }
         public bool CreateRating(RatingsModel model)
         {
             var entity = new Rating
             {
-                Id = _id,
+                
                 Professionalism = model.Professionalism,
                 Communication = model.Communication,
                 Effectiveness = model.Effectiveness,
@@ -40,7 +40,6 @@ namespace PeaceOfMind.Services
                 var query =
                     context
                     .Rating
-                    .Where(e => e.Id == _id)
                     .Select(
                     e =>
                         new RatingsGetItem
@@ -64,7 +63,7 @@ namespace PeaceOfMind.Services
                 var entity =
                     context
                             .Rating
-                            .Single(e => e.RatingsId == id && e.Id == _id);
+                            .Single(e => e.RatingsId == id);
                 return
                     new RatingsModel
                     {
@@ -83,7 +82,7 @@ namespace PeaceOfMind.Services
                 var entity =
                     context
                         .Rating
-                        .Single(e => e.RatingsId == id && e.Id == _id);
+                        .Single(e => e.RatingsId == id);
                              entity.Professionalism = updateModel.Professionalism;
                              entity.Communication = updateModel.Communication;
                              entity.Effectiveness = updateModel.Effectiveness;
