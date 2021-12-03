@@ -10,6 +10,8 @@ namespace PeaceOfMind.Data
 {
     public class OfficeLocation
     {
+        public Guid Id;
+
         [Key]           
         public int OfficeLocationId { get; set; }
         //public Guid  Id { get; set; }

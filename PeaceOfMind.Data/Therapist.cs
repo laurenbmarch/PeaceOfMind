@@ -28,6 +28,10 @@ namespace PeaceOfMind.Data
         {
             ListOfOffices = new HashSet<OfficeLocation>();
         }
-         
+
+
+        [JsonIgnore]
+        public virtual List<Rating> Ratings {get; set;}
+
     }
 }

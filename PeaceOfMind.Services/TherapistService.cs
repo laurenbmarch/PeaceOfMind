@@ -49,7 +49,8 @@ namespace PeaceOfMind.Services
                             {
                                 TherapistId = e.TherapistId,
                                 LastName = e.LastName,
-                                FirstName = e.FirstName
+                                FirstName = e.FirstName,
+                                Ratings = e.Ratings
                             }
                         );
                 return query.ToArray();
@@ -83,7 +84,7 @@ namespace PeaceOfMind.Services
                 var entity =
                     ctx
                         .Therapist
-                        .Single(e => e.TherapistId == id);// && e.Id == _id);
+                        .Single(e => e.TherapistId == id); //&& e.Id == _id);
                 entity.LastName = updatedModel.LastName;
                 entity.FirstName = updatedModel.FirstName;
                 entity.Gender = updatedModel.Gender;
@@ -99,11 +100,30 @@ namespace PeaceOfMind.Services
                 var entity =
                     ctx
                     .Therapist
-                    .Single(e => e.TherapistId == id);// && e.Id == _id);
+                    .Single(e => e.TherapistId == id); //&& e.Id == _id);
                 ctx.Therapist.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
         }
 
+        public bool AddRatingToTherapist(int id, RatingsModel model)
+        {
+            var entity =
+                new Rating
+                {
+                    Professionalism = model.Professionalism,
+                    Communication = model.Communication,
+                    Effectiveness = model.Effectiveness,
+                    Avaliability = model.Avaliability
+                };
+                    
+            using (var context = new ApplicationDbContext())
+            {
+                var findTherapist = context.Therapist.Single(t => t.TherapistId == id);
+                findTherapist.Ratings.Add(entity);
+                var num = context.SaveChanges();
+                return true;
+            }
+        }
     }
 }

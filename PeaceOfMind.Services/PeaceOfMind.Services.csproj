@@ -74,11 +74,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeaceOfMind.Data\PeaceOfMind.Data.csproj">
-      <Project>{51E52327-7D2B-42EA-85E0-314B11E7CE15}</Project>
+      <Project>{51e52327-7d2b-42ea-85e0-314b11e7ce15}</Project>
       <Name>PeaceOfMind.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PeaceOfMind.Models\PeaceOfMind.Models.csproj">
-      <Project>{4603874F-FAAA-430B-8467-DD39CE7A4C13}</Project>
+      <Project>{4603874f-faaa-430b-8467-dd39ce7a4c13}</Project>
       <Name>PeaceOfMind.Models</Name>
     </ProjectReference>
   </ItemGroup>

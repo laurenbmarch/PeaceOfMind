@@ -55,5 +55,16 @@ namespace PeaceOfMind.WebApi.Controllers
                 return InternalServerError();
             return Ok();
         }
+
+        [HttpPut]
+        public IHttpActionResult AddRatingToTherapist([FromUri]int therapistId, [FromBody] RatingsModel model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var therapistService = CreateTherapistService();
+            if (!therapistService.AddRatingToTherapist(therapistId, model))
+                return InternalServerError();
+            return Ok();
+        }
     }
 }
