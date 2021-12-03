@@ -78,7 +78,7 @@
       <Name>PeaceOfMind.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PeaceOfMind.Models\PeaceOfMind.Models.csproj">
-      <Project>{4603874F-FAAA-430B-8467-DD39CE7A4C13}</Project>
+      <Project>{4603874f-faaa-430b-8467-dd39ce7a4c13}</Project>
       <Name>PeaceOfMind.Models</Name>
     </ProjectReference>
   </ItemGroup>

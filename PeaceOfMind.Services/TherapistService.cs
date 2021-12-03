@@ -49,7 +49,8 @@ namespace PeaceOfMind.Services
                             {
                                 TherapistId = e.TherapistId,
                                 LastName = e.LastName,
-                                FirstName = e.FirstName
+                                FirstName = e.FirstName,
+                                Ratings = e.Ratings
                             }
                         );
                 return query.ToArray();
@@ -104,5 +105,24 @@ namespace PeaceOfMind.Services
             }
         }
 
+        public bool AddRatingToTherapist(int id, RatingsModel model)
+        {
+            var entity =
+                new Rating
+                {
+                    Professionalism = model.Professionalism,
+                    Communication = model.Communication,
+                    Effectiveness = model.Effectiveness,
+                    Avaliability = model.Avaliability
+                };
+                    
+            using (var context = new ApplicationDbContext())
+            {
+                var findTherapist = context.Therapist.Single(t => t.TherapistId == id);
+                findTherapist.Ratings.Add(entity);
+                var num = context.SaveChanges();
+                return true;
+            }
+        }
     }
 }

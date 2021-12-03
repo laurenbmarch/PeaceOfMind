@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,12 +21,17 @@ namespace PeaceOfMind.Data
         [Required]
         public string LicenseOrDegree { get; set; }
         [Required]
-        public string AreaOfSpecialty { get; set; }             
+        public string AreaOfSpecialty { get; set; }
+        [JsonIgnore]
         public virtual IEnumerable<OfficeLocations> ListOfOffices { get; set; }
         public Therapist()
         {
             ListOfOffices = new HashSet<OfficeLocations>();
         }
-        //public virtual Rating Rating { get; set; }        
+
+
+        [JsonIgnore]
+        public virtual List<Rating> Ratings {get; set;}
+
     }
 }

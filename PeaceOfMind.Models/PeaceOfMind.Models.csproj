@@ -50,5 +50,11 @@
     <Compile Include="TherapistGetItem.cs" />
     <Compile Include="TherapistModel.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PeaceOfMind.Data\PeaceOfMind.Data.csproj">
+      <Project>{51E52327-7D2B-42EA-85E0-314B11E7CE15}</Project>
+      <Name>PeaceOfMind.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
