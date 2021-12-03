@@ -57,21 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202112022259060_PeaceOfMindProject.cs" />
-    <Compile Include="Migrations\202112022259060_PeaceOfMindProject.Designer.cs">
-      <DependentUpon>202112022259060_PeaceOfMindProject.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112022321468_TherapistRatings.cs" />
-    <Compile Include="Migrations\202112022321468_TherapistRatings.Designer.cs">
-      <DependentUpon>202112022321468_TherapistRatings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112030047520_TherapistRating.cs" />
-    <Compile Include="Migrations\202112030047520_TherapistRating.Designer.cs">
-      <DependentUpon>202112030047520_TherapistRating.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112030109500_Ratings.cs" />
-    <Compile Include="Migrations\202112030109500_Ratings.Designer.cs">
-      <DependentUpon>202112030109500_Ratings.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OfficeLocations.cs" />
@@ -85,17 +71,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112022259060_PeaceOfMindProject.resx">
-      <DependentUpon>202112022259060_PeaceOfMindProject.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112022321468_TherapistRatings.resx">
-      <DependentUpon>202112022321468_TherapistRatings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112030047520_TherapistRating.resx">
-      <DependentUpon>202112030047520_TherapistRating.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112030109500_Ratings.resx">
-      <DependentUpon>202112030109500_Ratings.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

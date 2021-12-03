@@ -63,7 +63,9 @@ namespace PeaceOfMind.Services
                 var entity =
                     context
                             .Rating
+
                             .Single(e => e.RatingsId == id);
+
                 return
                     new RatingsModel
                     {
@@ -82,7 +84,9 @@ namespace PeaceOfMind.Services
                 var entity =
                     context
                         .Rating
+
                         .Single(e => e.RatingsId == id);
+
                              entity.Professionalism = updateModel.Professionalism;
                              entity.Communication = updateModel.Communication;
                              entity.Effectiveness = updateModel.Effectiveness;

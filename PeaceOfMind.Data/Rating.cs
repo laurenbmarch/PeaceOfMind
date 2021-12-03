@@ -11,6 +11,8 @@ namespace PeaceOfMind.Data
 {
     public class Rating
     {
+        public Guid Id;
+
         [Key]
         public int RatingsId { get; set; }
         
@@ -18,6 +20,7 @@ namespace PeaceOfMind.Data
         public int Id { get; set; }        
         [JsonIgnore]
         public virtual Therapist Therapist { get; set; }
+
         [Required]
         public int Professionalism { get; set; }
         [Required]

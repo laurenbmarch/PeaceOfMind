@@ -64,7 +64,7 @@ namespace PeaceOfMind.Services
                 var entity =
                     ctx
                         .Therapist
-                        .Single(e => e.TherapistId == id && e.Id == _id);
+                        .Single(e => e.TherapistId == id); //&& e.Id == _id);
                 return
                     new TherapistModel
                     {
@@ -83,7 +83,7 @@ namespace PeaceOfMind.Services
                 var entity =
                     ctx
                         .Therapist
-                        .Single(e => e.TherapistId == id && e.Id == _id);
+                        .Single(e => e.TherapistId == id); //&& e.Id == _id);
                 entity.LastName = updatedModel.LastName;
                 entity.FirstName = updatedModel.FirstName;
                 entity.Gender = updatedModel.Gender;
@@ -99,7 +99,7 @@ namespace PeaceOfMind.Services
                 var entity =
                     ctx
                     .Therapist
-                    .Single(e => e.TherapistId == id && e.Id == _id);
+                    .Single(e => e.TherapistId == id); //&& e.Id == _id);
                 ctx.Therapist.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
