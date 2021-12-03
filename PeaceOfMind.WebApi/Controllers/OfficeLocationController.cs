@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 using PeaceOfMind.Models;
 using PeaceOfMind.Services;
 using System;
@@ -16,8 +17,8 @@ namespace PeaceOfMind.WebApi.Controllers
         private OfficeLocationService CreateOfficeLocationService()
         {
             var Id = Guid.Parse(User.Identity.GetUserId());
-            var ingredientService = new OfficeLocationService(Id);
-            return ingredientService;
+            var officeLocationService = new OfficeLocationService(Id);
+            return officeLocationService;
         }
         public IHttpActionResult Post([FromBody]OfficeLocationModel model)
         {
@@ -53,6 +54,15 @@ namespace PeaceOfMind.WebApi.Controllers
         {
             var service = CreateOfficeLocationService();
             if (!service.RemoveOfficeLocation(id))
+                return InternalServerError();
+            return Ok();
+        }
+        [HttpPut]
+       
+        public IHttpActionResult AddTherapistToOfficeLocation([FromUri] int officeId, [FromUri] int therapistId)
+        {
+            var service = CreateOfficeLocationService();
+            if (!service.AddTherapistToOffice(officeId, therapistId))
                 return InternalServerError();
             return Ok();
         }

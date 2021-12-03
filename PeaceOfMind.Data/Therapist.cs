@@ -12,7 +12,7 @@ namespace PeaceOfMind.Data
     {
         [Key]
         public int TherapistId { get; set; }
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
         [Required]
         public string LastName { get; set; }
         [Required]
@@ -21,12 +21,12 @@ namespace PeaceOfMind.Data
         [Required]
         public string LicenseOrDegree { get; set; }
         [Required]
-        public string AreaOfSpecialty { get; set; }
+        public string AreaOfSpecialty { get; set; }             
         [JsonIgnore]
-        public virtual IEnumerable<OfficeLocations> ListOfOffices { get; set; }
+        public virtual HashSet<OfficeLocation> ListOfOffices { get; set; }
         public Therapist()
         {
-            ListOfOffices = new HashSet<OfficeLocations>();
+            ListOfOffices = new HashSet<OfficeLocation>();
         }
 
 

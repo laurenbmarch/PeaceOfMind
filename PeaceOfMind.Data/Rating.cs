@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 namespace PeaceOfMind.Data
 {
     public class Rating
-    {
-        public Guid Id;
+    {        
 
         [Key]
         public int RatingsId { get; set; }
         
         [ForeignKey(nameof(Therapist))]
-        public int Id { get; set; }        
         [JsonIgnore]
+        public int TherapistId { get; set; }        
         public virtual Therapist Therapist { get; set; }
 
         [Required]
@@ -31,7 +30,7 @@ namespace PeaceOfMind.Data
         public int Avaliability { get; set; }
         
         public decimal AverageRating { get; set; }
-
+      
     }
 }
 

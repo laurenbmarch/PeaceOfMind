@@ -16,13 +16,13 @@ namespace PeaceOfMind.Services
         {
             _id = Id;
         }
-
+        public TherapistService() { }
         public bool CreateTherapist(TherapistModel model)
         {
             var entity =
                 new Therapist()
                 {
-                    Id = _id,
+                    //Id = _id,
                     LastName = model.LastName,
                     FirstName = model.FirstName,
                     LicenseOrDegree = model.LicenseOrDegree,
@@ -42,7 +42,7 @@ namespace PeaceOfMind.Services
                 var query =
                     context
                         .Therapist
-                        .Where(e => e.Id == _id)
+                       // .Where(e => e.Id == _id)
                         .Select(
                         e =>
                             new TherapistGetItem
@@ -57,7 +57,7 @@ namespace PeaceOfMind.Services
             }
         }
 
-        public TherapistModel GetTherapistById(int id)
+        public Therapist GetTherapistById(int id)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -66,8 +66,9 @@ namespace PeaceOfMind.Services
                         .Therapist
                         .Single(e => e.TherapistId == id); //&& e.Id == _id);
                 return
-                    new TherapistModel
+                    new Therapist
                     {
+                        TherapistId = entity.TherapistId,                        
                         LastName = entity.LastName,
                         FirstName = entity.FirstName,
                         Gender = entity.Gender,

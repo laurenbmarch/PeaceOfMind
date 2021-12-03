@@ -57,10 +57,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-
+    <Compile Include="Migrations\202112030016477_OfficeLocationTherapists.cs" />
+    <Compile Include="Migrations\202112030016477_OfficeLocationTherapists.Designer.cs">
+      <DependentUpon>202112030016477_OfficeLocationTherapists.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="OfficeLocations.cs" />
+    <Compile Include="OfficeLocation.cs" />
+    <Compile Include="OfficeLocationTherapists.cs" />
     <Compile Include="Therapist.cs" />
     <Compile Include="IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,7 +74,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-
+    <EmbeddedResource Include="Migrations\202112030016477_OfficeLocationTherapists.resx">
+      <DependentUpon>202112030016477_OfficeLocationTherapists.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

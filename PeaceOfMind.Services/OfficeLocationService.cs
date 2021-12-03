@@ -1,4 +1,6 @@
-﻿using PeaceOfMind.Data;
+﻿
+
+using PeaceOfMind.Data;
 using PeaceOfMind.Models;
 using System;
 using System.Collections.Generic;
@@ -20,9 +22,9 @@ namespace PeaceOfMind.Services
         public bool CreateOfficeLocation(OfficeLocationModel model)
         {
             var entity =
-                        new OfficeLocations
+                        new OfficeLocation
                         {
-                           
+
                             AddressNumber = model.AddressNumber,
                             StreetName = model.StreetName,
                             City = model.City,
@@ -48,12 +50,13 @@ namespace PeaceOfMind.Services
                             new OfficeLocationGetItem
                             {
                                 OfficeLocationId = e.OfficeLocationId,
+                               // TherapistCount = e.ListOfTherapists.Count,
                                 AddressNumber = e.AddressNumber,
                                 StreetName = e.StreetName,
                                 City = e.City,
                                 State = e.State,
                                 ZipCode = e.ZipCode,
-                                Country = e.Country
+                                Country = e.Country                                
                             }
                         );
                 return query.ToArray();
@@ -75,7 +78,8 @@ namespace PeaceOfMind.Services
                         City = entity.City,
                         State = entity.State,
                         ZipCode = entity.ZipCode,
-                        Country = entity.Country
+                        Country = entity.Country,
+                        Therapists = entity.ListOfTherapists.ToList()
                     };
             }
         }
@@ -103,10 +107,22 @@ namespace PeaceOfMind.Services
                 var entity =
                     ctx
                         .OfficeLocations
-                        .Single(e => e.OfficeLocationId == id);
+                        .Single(e => e.OfficeLocationId == id);                 
+
                 ctx.OfficeLocations.Remove(entity);
                 return ctx.SaveChanges() == 1;
             }
         }
+        public bool AddTherapistToOffice(int officeId, int therapistId)
+        {            
+            using (var ctx = new ApplicationDbContext())
+            {
+                var foundOffice = ctx.OfficeLocations.Single(ol => ol.OfficeLocationId == officeId);
+                var foundTherapist = ctx.Therapist.Single(t => t.TherapistId == therapistId);
+                foundOffice.ListOfTherapists.Add(foundTherapist);
+                var num = ctx.SaveChanges();
+                return num == 1;
+            }
+        }        
     }
 }
