@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,12 +10,16 @@ using System.Threading.Tasks;
 namespace PeaceOfMind.Data
 {
     public class Rating
-    {
+    {        
+
         [Key]
-        public int Id { get; set; }
-        [Required, ForeignKey(nameof(Therapist))]
-        public int TherapistId { get; set; }
+        public int RatingsId { get; set; }
+        
+        [ForeignKey(nameof(Therapist))]
+        [JsonIgnore]
+        public int TherapistId { get; set; }        
         public virtual Therapist Therapist { get; set; }
+
         [Required]
         public int Professionalism { get; set; }
         [Required]
@@ -23,9 +28,9 @@ namespace PeaceOfMind.Data
         public int Effectiveness { get; set; }
         [Required]
         public int Avaliability { get; set; }
-        [Required]
+        
         public decimal AverageRating { get; set; }
-
+      
     }
 }
 

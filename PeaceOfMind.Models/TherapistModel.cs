@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace PeaceOfMind.Models
 {
-    class TherapistModel
+    public class TherapistModel
     {
         public int Id { get; set; }
+
         [Required]
         public string LastName { get; set; }
         [Required]

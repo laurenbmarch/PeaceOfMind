@@ -207,6 +207,9 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OfficeLocationController.cs" />
+    <Compile Include="Controllers\TherapistController.cs" />
+    <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -276,6 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Ratings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -308,7 +312,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeaceOfMind.Data\PeaceOfMind.Data.csproj">
-      <Project>{51e52327-7d2b-42ea-85e0-314b11e7ce15}</Project>
+      <Project>{51E52327-7D2B-42EA-85E0-314B11E7CE15}</Project>
       <Name>PeaceOfMind.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\PeaceOfMind.Models\PeaceOfMind.Models.csproj">
