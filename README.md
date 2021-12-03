@@ -14,11 +14,29 @@ We started the project by each creating a table for the database:
 * Therapist Office Location Table: Austin
 
 Each therapist in the database has the following attributes:
-* ID Number
+* ID Number (not visible to the user)
 * First and Last Name
 * Gender
 * Licensure/Degree Information
 * Areas of Specialty
 * Physical Office Location(s)
 * Average "Star" Rating from Users
+
+Each therapist's average rating comes from the following attributes in the therapist rating table:
+* Professionalism
+* Availability
+* Communication
+* Effectiveness
+
+Each therapist can be connected to a table with details of their physical office location(s):
+* Location ID (not visible ot the user)
+* Name of the Office
+* Street Number
+* Street Name
+* City
+* State
+* Zip Code
+* Country
+
+
 
