@@ -26,6 +26,6 @@ namespace PeaceOfMind.Models
         [Required]
         [MinLength(3, ErrorMessage = "Your location country has to be at least 3 characters.")]
         public string Country { get; set;  }       
-        public List<Therapist> Therapists { get; set; }
+        public List<TherapistModel> Therapists { get; set; }
     }
 }

@@ -49,8 +49,7 @@ namespace PeaceOfMind.Services
                             {
                                 TherapistId = e.TherapistId,
                                 LastName = e.LastName,
-                                FirstName = e.FirstName,
-                                Ratings = e.Ratings
+                                FirstName = e.FirstName,                                
                             }
                         );
                 return query.ToArray();
@@ -68,12 +67,13 @@ namespace PeaceOfMind.Services
                 return
                     new Therapist
                     {
-                        TherapistId = entity.TherapistId,                        
+                        TherapistId = entity.TherapistId,
                         LastName = entity.LastName,
                         FirstName = entity.FirstName,
                         Gender = entity.Gender,
                         LicenseOrDegree = entity.LicenseOrDegree,
-                        AreaOfSpecialty = entity.AreaOfSpecialty
+                        AreaOfSpecialty = entity.AreaOfSpecialty,
+                        Ratings = entity.Ratings
                     };
             }
         }
@@ -122,7 +122,7 @@ namespace PeaceOfMind.Services
                 var findTherapist = context.Therapist.Single(t => t.TherapistId == id);
                 findTherapist.Ratings.Add(entity);
                 var num = context.SaveChanges();
-                return true;
+                return num == 1;
             }
         }
     }

@@ -10,13 +10,13 @@ namespace PeaceOfMind.Data
 {
     public class OfficeLocation
     {
-        public Guid Id;
+        
 
         [Key]           
         public int OfficeLocationId { get; set; }
         //public Guid  Id { get; set; }
         [JsonIgnore]
-        public virtual HashSet<Therapist>  ListOfTherapists {get; set;}
+        public virtual ICollection<Therapist>  ListOfTherapists {get; set;}
         public OfficeLocation()
         {
             ListOfTherapists = new HashSet<Therapist>();
