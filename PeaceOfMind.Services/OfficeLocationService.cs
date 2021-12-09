@@ -50,7 +50,7 @@ namespace PeaceOfMind.Services
                             new OfficeLocationGetItem
                             {
                                 OfficeLocationId = e.OfficeLocationId,
-                               // TherapistCount = e.ListOfTherapists.Count,
+                               TherapistCount = e.ListOfTherapists.Count,
                                 AddressNumber = e.AddressNumber,
                                 StreetName = e.StreetName,
                                 City = e.City,
@@ -59,7 +59,7 @@ namespace PeaceOfMind.Services
                                 Country = e.Country                                
                             }
                         );
-                return query.ToArray();
+                return query.ToList();
             }
         }
         public OfficeLocationModel GetOfficeLocationById(int id)
@@ -79,7 +79,7 @@ namespace PeaceOfMind.Services
                         State = entity.State,
                         ZipCode = entity.ZipCode,
                         Country = entity.Country,
-                        Therapists = entity.ListOfTherapists.ToList()
+                        Therapists = ConvertFromTherapistToTherpistModel(entity.ListOfTherapists.ToList())
                     };
             }
         }
@@ -123,6 +123,24 @@ namespace PeaceOfMind.Services
                 var num = ctx.SaveChanges();
                 return num == 1;
             }
-        }        
+        }
+        private List<TherapistModel> ConvertFromTherapistToTherpistModel(List<Therapist> therapists)        
+        {
+            List<TherapistModel> therapistModelList = new List<TherapistModel>();
+            foreach(Therapist t in therapists)
+            {
+                TherapistModel therapistModel =
+                    new TherapistModel
+                    {
+                        FirstName = t.FirstName,
+                        LastName = t.LastName,
+                        LicenseOrDegree = t.LicenseOrDegree,
+                        AreaOfSpecialty = t.AreaOfSpecialty,
+                        Gender = t.Gender
+                    };
+                therapistModelList.Add(therapistModel);
+            }
+            return therapistModelList;
+        }
     }
 }
