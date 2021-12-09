@@ -13,33 +13,59 @@ using System.Threading.Tasks;
 namespace PeaceOfMind.ConsoleApp
 {
     class PeaceOfMindUI
-    {
-        private AccountController _aController = new AccountController();
-        private OfficeLocationController _oLController = new OfficeLocationController();
-        private TherapistController _tController = new TherapistController();
+    {     
         private HttpClient _client = new HttpClient();
-
         public void Run()
         {
-            Login();
-            MainMenu();
+            var accesstoken = Login();
+            MainMenu(accesstoken);
         }
-         private async Task Login()
-          {              
-              Console.WriteLine("Welcome to Peace Of Mind.\n"
-                  + "Do you already have an account? ( y / n )");
-              string hasAccount = Console.ReadLine().ToLower();
-              Console.Clear();
-              if (hasAccount == "y")
-              {
-              }
-              if (hasAccount == "n")
-              {
-               await  CreateApplicationUser();
-              }
-          }
-        private void MainMenu()
-        {           
+        private string Login()
+        {
+            bool loggingIn = true;
+            while (loggingIn)
+            {
+                Console.WriteLine("Welcome to Peace Of Mind.\n"
+                    + "Do you already have an account? ( y / n )");
+                string hasAccount = Console.ReadLine().ToLower();
+                Console.Clear();
+                if (hasAccount == "y")
+                {
+                    var user = FindExsistingUser();
+                    var token = GetUserToken(user);
+                    if (token is null)
+                    {
+                        Console.WriteLine("That login is incorrect.");
+                        PressAnyKey();
+                    }
+                    else
+                    { 
+                        loggingIn = false;
+                        return token.AccessToken;
+                    }
+                }
+                if (hasAccount == "n")
+                {
+                    var user = CreateApplicationUser();
+                    var token = GetUserToken(user);
+                    if (token is null)
+                    {
+                        Console.WriteLine("Your logging could not be created.");
+                        PressAnyKey();
+                    }
+                    else
+                    {
+                        loggingIn = false;
+                        return token.AccessToken;
+                    }
+                }               
+            }
+            return null;
+        }
+        private void MainMenu(string accessToken)
+        {
+            Console.Clear();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", accessToken);
             bool isRunning = true;
             while (isRunning)
             {
@@ -61,7 +87,7 @@ namespace PeaceOfMind.ConsoleApp
                         PressAnyKey();
                         break;
                     case 2:
-                        GetAllOfficeLocations();
+                        DisplayAllOfficeLocations();
                         PressAnyKey();
                         break;
                     case 3:
@@ -69,6 +95,7 @@ namespace PeaceOfMind.ConsoleApp
                         PressAnyKey();
                         break;
                     case 4:
+                        UpdateAnOfficeLocation();
                         PressAnyKey();
                         break;
                     case 5:
@@ -107,37 +134,65 @@ namespace PeaceOfMind.ConsoleApp
                 }
             }
         }
-        private async Task<AppUserModel> CreateApplicationUser()
+        private AppUserModel FindExsistingUser()
         {
-            var model = new AppUserModel();
+            Console.WriteLine("Please enter your email:");
+            string email = Console.ReadLine();
+            Console.WriteLine("Please enter your password:");
+            string password = Console.ReadLine();
+            var user = new AppUserModel();
+            user.Email = email;
+            user.Password = password;
+            user.GrantType = "password";
+            return user;
+        }
+        private AppUserModel CreateApplicationUser()
+        {
             Console.WriteLine("Please enter your email.");
-            model.Email = Console.ReadLine();
+            string email = Console.ReadLine();
             Console.WriteLine("Please enter your password.");
-            model.Password = Console.ReadLine();
+            string password = Console.ReadLine();
             Console.WriteLine("Please re-enter your password.");
-            model.ConfirmPassword = Console.ReadLine();
+            string confirmPassword = Console.ReadLine();
+            Console.Clear();
+            var registerUserPairs = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("email", email),
+                new KeyValuePair<string, string>("password", password),
+                new KeyValuePair<string, string>("confirmpassword", confirmPassword)
+            };
+            var userContent = new FormUrlEncodedContent(registerUserPairs);
+            var model = new AppUserModel();
+            model.Email = email;
+            model.Password = password;
+            model.ConfirmPassword = confirmPassword;
             model.GrantType = "password";
-            await _aController.Register(ConvertToBindingModel(model));
-            UserTokenModel  token = await GetUserToken(model);
-            model.Token = token.AccessToken;             
+            var result = _client.PostAsync("https://localhost:44301/api/Account/Register", userContent).Result;
             return model;
         }
-       private async Task<UserTokenModel> GetUserToken(AppUserModel appUser)
+        private UserTokenModel GetUserToken(AppUserModel appUser)
         {
             var tokenSubmit =
-                  new GetTokenModel
-                  {
-                      UserName = appUser.Email,
-                      Password = appUser.Password,
-                      GrantType = appUser.GrantType
-                  };
-            string outgoingJson = JsonConvert.SerializeObject(tokenSubmit);
-            var serializeJson = new StringContent(outgoingJson, Encoding.UTF8, "application/x-www-form-urlencoded");
-            HttpResponseMessage response = await _client.PostAsync("https://localhost:44301/token", serializeJson);
+            new GetTokenModel
+            {
+                UserName = appUser.Email,
+                Password = appUser.Password,
+                GrantType = appUser.GrantType
+            };
+            // string outgoingJson = JsonConvert.SerializeObject(tokenSubmit);
+            // var serializeJson = new StringContent(outgoingJson, Encoding.UTF8, "application/x-www-form-urlencoded");
+            var tokenPostPairs = new List<KeyValuePair<string, string>>
+           {
+               new KeyValuePair<string, string>("username", tokenSubmit.UserName),
+               new KeyValuePair<string, string>("password", tokenSubmit.Password),
+               new KeyValuePair<string, string>("grant_type", tokenSubmit.GrantType)
+           };
+            var tokenContent = new FormUrlEncodedContent(tokenPostPairs);
+            HttpResponseMessage response = _client.PostAsync("https://localhost:44301/token", tokenContent).Result;
             if (response.IsSuccessStatusCode)
             {
-                var incomingJson = response.ToString();
-                UserTokenModel token = JsonConvert.DeserializeObject<UserTokenModel>(incomingJson);
+                var tokenJson = response.Content.ReadAsStringAsync().Result;
+                UserTokenModel token = JsonConvert.DeserializeObject<UserTokenModel>(tokenJson);
                 return token;
             }
             return null;
@@ -155,6 +210,20 @@ namespace PeaceOfMind.ConsoleApp
         }
         private void CreateOfficeLocation()
         {
+            var createdOfficePairs = CollectOfficeKeyPairs();
+            var officeContent = new FormUrlEncodedContent(createdOfficePairs);
+            var createdOffice = _client.PostAsync($"https://localhost:44301/api/OfficeLocation", (officeContent)).Result;            
+            if (createdOffice.IsSuccessStatusCode)
+            {
+                Console.WriteLine("The office location was created.");
+            }
+            else
+            {
+                Console.WriteLine("The office location could not be created.");
+            }
+        }
+        private List<KeyValuePair<string, string>> CollectOfficeKeyPairs()
+        {
             var model = new OfficeLocationModel();
             Console.WriteLine("Please enter the Address number of the Office Location:");
             model.AddressNumber = int.Parse(Console.ReadLine());
@@ -169,63 +238,63 @@ namespace PeaceOfMind.ConsoleApp
             Console.WriteLine("Please enter the Country that the office is located in:");
             model.Country = Console.ReadLine();
             Console.Clear();
-            _oLController.Post(model);
+            var serializedJson = JsonConvert.SerializeObject(model);
+            var createOfficePairs = new List<KeyValuePair<string, string>>
+           {
+               new KeyValuePair<string, string>("AddressNumber", model.AddressNumber.ToString()),
+               new KeyValuePair<string, string>("StreetName", model.StreetName),
+               new KeyValuePair<string, string>("City", model.City),
+               new KeyValuePair<string, string>("State", model.State),
+               new KeyValuePair<string, string>("Zipcode", model.ZipCode),
+               new KeyValuePair<string, string>("Country", model.Country)
+           };
+            return createOfficePairs;
         }
-        private void GetAllOfficeLocations()
+        private void  DisplayAllOfficeLocations()
         {
-            // var offices =   _client.GetAsync("https://localhost:44301/api/OfficeLocation");
-            // offices.Wait();
-            var offices = _oLController.Get();
-            //if (offices.IsCompleted)
-            // {
-            // var officeTask = offices.Result;                
-            // if (officeTask.IsSuccessStatusCode)
-            // {
-            var officeJson = offices.ToString();
-            List<OfficeLocationGetItem> officesList = JsonConvert.DeserializeObject<dynamic>(officeJson);
-
-            foreach (OfficeLocationGetItem office in officesList)
+            Console.Clear();
+            var offices = _client.GetAsync("https://localhost:44301/api/OfficeLocation").Result;
+            //var offices = _oLController.Get();
+            if (offices.IsSuccessStatusCode)
             {
-                Console.WriteLine($" {office.OfficeLocationId}"
-                    + $"{office.AddressNumber} {office.StreetName}, {office.City}, {office.State}"
-                    + $"{office.TherapistCount}");
+                var officeJson = offices.Content.ReadAsStringAsync().Result;
+                List<OfficeLocationGetItem> officesList = JsonConvert.DeserializeObject<List<OfficeLocationGetItem>>(officeJson);
+                foreach (OfficeLocationGetItem office in officesList)
+                {
+                    Console.WriteLine($" OfficeId: {office.OfficeLocationId}\n"
+                        + $" {office.AddressNumber} {office.StreetName}, {office.City}, {office.State} \n"
+                        + $" Therapists at this location: {office.TherapistCount}\n");
+                }                
             }
-            //  }
-            //  }
         }
         private void GetASpecificOfficeLocation()
         {
             Console.WriteLine("Do you know the Office Id that you would like to view? ( y / n)");
             string userResponse = Console.ReadLine().ToLower();
-            if(userResponse == "y")
+            if (userResponse == "y")
             {
                 Console.Clear();
                 DisplayOfficeLocation();
             }
-            if(userResponse == "n")
+            if (userResponse == "n")
             {
-                GetAllOfficeLocations();
+                DisplayAllOfficeLocations();
                 PressAnyKey();
                 DisplayOfficeLocation();
             }
         }
         private OfficeLocationModel GetOfficeLocationById(int officeId)
         {
-            var office = _client.GetAsync($"https://localhost:44301/api/OfficeLocation/{officeId}");
-            office.Wait();
+            var office = _client.GetAsync($"https://localhost:44301/api/OfficeLocation/{officeId}").Result;
             //var office = _oLController.GetById(officeId);
-            if (office.IsCompleted)
+            if (office.IsSuccessStatusCode)
             {
-                var officeTask = office.Result;
-                if (officeTask.IsSuccessStatusCode)
-                {
-                    var officeJson = office.ToString();
-                    var officeObject = JsonConvert.DeserializeObject<OfficeLocationModel>(officeJson);
-                    return officeObject;
-                }
+                var officeJson = office.Content.ReadAsStringAsync().Result;
+                var officeObject = JsonConvert.DeserializeObject<OfficeLocationModel>(officeJson);
+                return officeObject;
             }
             return null;
-        }     
+        }
         private void DisplayOfficeLocation()
         {
             Console.WriteLine("Please enter the Office Location Id:");
@@ -238,6 +307,78 @@ namespace PeaceOfMind.ConsoleApp
                 Console.WriteLine($"Name: {t.FirstName} {t.LastName}\n"
                     + $"License and/or Degrees: {t.LicenseOrDegree}\n"
                     + $"Areas of specialty: {t.AreaOfSpecialty}");
+            }
+        }
+        private void UpdateAnOfficeLocation()
+        {
+            Console.Clear();
+            Console.WriteLine("Do you know the id of the office location that you want to update? ( y / n )");
+            string userInput = Console.ReadLine().ToLower();
+            Console.Clear();
+            if (userInput == "y")
+            {
+                Console.WriteLine("Please enter the office Id of the office you want to update:");
+                int officeId = int.Parse(Console.ReadLine());
+                var foundOffice = GetOfficeLocationById(officeId);
+                if (foundOffice != null)
+                {
+                    var updateOfficePairs= CollectOfficeKeyPairs();
+                    var updateOfficeContent = new FormUrlEncodedContent(updateOfficePairs);
+                    var response = _client.PutAsync($"https://localhost:44301/api/OfficeLocation/{officeId}", updateOfficeContent).Result;                  
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office location was updated.");
+                        PressAnyKey();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office could not be updated.");
+                        PressAnyKey();
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("That office location does not exsist.");
+                    PressAnyKey();
+                }
+            }
+            if (userInput == "n")
+            {
+                Console.Clear();
+                DisplayAllOfficeLocations();
+                Console.WriteLine("\n\nPlease enter the office Id of the office you want to update:");
+                int officeId = int.Parse(Console.ReadLine());
+                var foundOffice = GetOfficeLocationById(officeId);
+                if (foundOffice != null)
+                {
+                    var updateOfficePairs = CollectOfficeKeyPairs();
+                    var updateOfficeContent = new FormUrlEncodedContent(updateOfficePairs);
+                    var response = _client.PutAsync($"https://localhost:44301/api/OfficeLocation/{officeId}", updateOfficeContent).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office location was updated.");
+                        PressAnyKey();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office could not be updated.");
+                        PressAnyKey();
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("That office location does not exsist.");
+                    PressAnyKey();
+                }
+
             }
         }
         public void PressAnyKey()
