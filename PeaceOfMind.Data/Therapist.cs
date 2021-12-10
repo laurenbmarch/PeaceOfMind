@@ -21,7 +21,7 @@ namespace PeaceOfMind.Data
         [Required]
         public string LicenseOrDegree { get; set; }
         [Required]
-        public string AreaOfSpecialty { get; set; }             
+        public List<AreaOfSpecialty> AreaOfSpecialty { get; set; }             
         [JsonIgnore]
         public virtual ICollection<OfficeLocation> ListOfOffices { get; set; }
         public Therapist()
@@ -31,5 +31,17 @@ namespace PeaceOfMind.Data
         [JsonIgnore]
         public virtual List<Rating> Ratings {get; set;}
 
+    }
+    public enum AreaOfSpecialty
+    {
+        Psychotherapy = 1,
+        Anxiety,
+        Depression,
+        Family,
+        Marriage,
+        Young_Adult,
+        Substance_Abuse,
+        Grief,
+        Trauma,
     }
 }
