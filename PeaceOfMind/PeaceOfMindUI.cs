@@ -100,12 +100,14 @@ namespace PeaceOfMind.ConsoleApp
                         PressAnyKey();
                         break;
                     case 5:
+                        DeleteAnOfficeLocation();
                         PressAnyKey();
                         break;
                     case 6:
                         PressAnyKey();
                         break;
                     case 7:
+                        CreateTherapist();
                         PressAnyKey();
                         break;
                     case 8:
@@ -382,8 +384,76 @@ namespace PeaceOfMind.ConsoleApp
 
             }
         }
+        private void DeleteAnOfficeLocation()
+        {
+            Console.Clear();
+            Console.WriteLine("Do you know the id of the office location that you want to update? ( y / n )");
+            string userInput = Console.ReadLine().ToLower();
+            Console.Clear();
+            if (userInput == "y")
+            {
+                Console.WriteLine("Please enter the office Id of the office you want to update:");
+                int officeId = int.Parse(Console.ReadLine());
+                var foundOffice = GetOfficeLocationById(officeId);
+                if (foundOffice != null)
+                {
+                    var response = _client.DeleteAsync($"https://localhost:44301/api/OfficeLocation/{officeId}").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office location was deleted.");
+                        PressAnyKey();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office could not be deleted.");
+                        PressAnyKey();
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("That office location does not exsist.");
+                    PressAnyKey();
+                }
+            }
+            if (userInput == "n")
+            {
+                Console.Clear();
+                DisplayAllOfficeLocations();
+                Console.WriteLine("\n\nPlease enter the office Id of the office you want to delete:");
+                int officeId = int.Parse(Console.ReadLine());
+                var foundOffice = GetOfficeLocationById(officeId);
+                if (foundOffice != null)
+                {
+
+                    var response = _client.DeleteAsync($"https://localhost:44301/api/OfficeLocation/{officeId}").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office location was deleted.");
+                        PressAnyKey();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office could not be deleted.");
+                        PressAnyKey();
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("That office location does not exsist.");
+                    PressAnyKey();
+                }
+            }
+        }
         private List<KeyValuePair<string, string>> CollectTherapistKeyPairs()
-        {            
+        {
             Console.Clear();
             Console.WriteLine("Please enter the first name of the therapist you wouldf like to add:");
             string firstName = Console.ReadLine();
@@ -409,14 +479,14 @@ namespace PeaceOfMind.ConsoleApp
         {
             var therapistKeyValuePairs = CollectTherapistKeyPairs();
             var therapistContent = new FormUrlEncodedContent(therapistKeyValuePairs);
-            var createdOffice = _client.PostAsync($"https://localhost:44301/api/OfficeLocation", (therapistContent)).Result;
+            var createdOffice = _client.PostAsync($"https://localhost:44301/api/Therapist", (therapistContent)).Result;
             if (createdOffice.IsSuccessStatusCode)
-            
-                Console.WriteLine("The office location was created.");
+            {
+                Console.WriteLine("The therapist was created.");
             }
             else
             {
-                Console.WriteLine("The office location could not be created.");
+                Console.WriteLine("The therapist could not be created.");
             }
         }
         public List<AreaOfSpecialty> CollectAreaOfSpecialities()
@@ -472,13 +542,11 @@ namespace PeaceOfMind.ConsoleApp
             bool whileAdding = true;
             while (whileAdding)
             {
+                Console.Clear();
                 Console.WriteLine("Would you like to add another Area of speciality? ( y / n)");
                 string userResponse = Console.ReadLine().ToLower();
                 if (userResponse == "y")
                 {
-                    Console.Clear();
-                    bool addingSpecialities = true;
-                    while (addingSpecialities)
                     {
                         Console.WriteLine("Please enter the number of the speciality you would like to add: \n"
                      + "1 = Psychotherapy,\n"
@@ -487,7 +555,7 @@ namespace PeaceOfMind.ConsoleApp
                      + "4 = Family,\n"
                      + "5 = Marriage,\n"
                      + "6 = Young_Adult,\n"
-                     + "7 = Substance_Abuse\n "
+                     + "7 = Substance_Abuse\n"
                      + "8 = Grief\n"
                      + "9 = Trauma");
                         int speciality = int.Parse(Console.ReadLine());
@@ -524,16 +592,16 @@ namespace PeaceOfMind.ConsoleApp
                                 Console.WriteLine("Please enter a valid option...");
                                 PressAnyKey();
                                 break;
-                        }
+                        }       
+                    }
+                }
                         if (userResponse == "n")
                         {
                             Console.Clear();
                             Console.WriteLine("Your list of specialities has been created");
-                            addingSpecialities = false;
+                            whileAdding = false;
                             return listOfSpecialities;
                         }
-                    }
-                }
             }
             return null;
         }

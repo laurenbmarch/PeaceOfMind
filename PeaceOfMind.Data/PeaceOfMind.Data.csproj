@@ -73,6 +73,10 @@
     <Compile Include="Migrations\202112100439024_UITest1.Designer.cs">
       <DependentUpon>202112100439024_UITest1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112102340059_UITest2.cs" />
+    <Compile Include="Migrations\202112102340059_UITest2.Designer.cs">
+      <DependentUpon>202112102340059_UITest2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OfficeLocation.cs" />
     <Compile Include="OfficeLocationTherapists.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112100439024_UITest1.resx">
       <DependentUpon>202112100439024_UITest1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112102340059_UITest2.resx">
+      <DependentUpon>202112102340059_UITest2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
