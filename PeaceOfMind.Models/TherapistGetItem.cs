@@ -13,6 +13,8 @@ namespace PeaceOfMind.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public List<Rating> Ratings { get; set; }
+
+        public AreaOfSpecialty AreaOfSpecialty { get; set; }
         
     }
 }

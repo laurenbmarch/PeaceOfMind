@@ -57,13 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\202112030016477_OfficeLocationTherapists.cs" />
-    <Compile Include="Migrations\202112030016477_OfficeLocationTherapists.Designer.cs">
-      <DependentUpon>202112030016477_OfficeLocationTherapists.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202112030155362_Thur2.cs" />
-    <Compile Include="Migrations\202112030155362_Thur2.Designer.cs">
-      <DependentUpon>202112030155362_Thur2.cs</DependentUpon>
+    <Compile Include="Migrations\202112100043440_thisiscrazy.cs" />
+    <Compile Include="Migrations\202112100043440_thisiscrazy.Designer.cs">
+      <DependentUpon>202112100043440_thisiscrazy.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OfficeLocation.cs" />
@@ -78,11 +74,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202112030016477_OfficeLocationTherapists.resx">
-      <DependentUpon>202112030016477_OfficeLocationTherapists.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202112030155362_Thur2.resx">
-      <DependentUpon>202112030155362_Thur2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202112100043440_thisiscrazy.resx">
+      <DependentUpon>202112100043440_thisiscrazy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

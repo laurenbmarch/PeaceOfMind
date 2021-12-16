@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PeaceOfMind.Data;
 
 namespace PeaceOfMind.Models
 {
@@ -20,7 +21,8 @@ namespace PeaceOfMind.Models
         [Required]
         public string LicenseOrDegree { get; set; }
         [Required]
-        public string AreaOfSpecialty { get; set; }
+        public AreaOfSpecialty AreaOfSpecialty { get; set; }
         
     }
+
 }

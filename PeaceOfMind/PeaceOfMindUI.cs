@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PeaceOfMind.Data;
 using PeaceOfMind.Models;
 using PeaceOfMind.WebApi.Controllers;
 using PeaceOfMind.WebApi.Models;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace PeaceOfMind.ConsoleApp
 {
     class PeaceOfMindUI
-    {     
+    {
         private HttpClient _client = new HttpClient();
         public void Run()
         {
@@ -31,7 +32,7 @@ namespace PeaceOfMind.ConsoleApp
                 Console.Clear();
                 if (hasAccount == "y")
                 {
-                    var user = FindExsistingUser();
+                    var user = FindExistingUser();
                     var token = GetUserToken(user);
                     if (token is null)
                     {
@@ -39,7 +40,7 @@ namespace PeaceOfMind.ConsoleApp
                         PressAnyKey();
                     }
                     else
-                    { 
+                    {
                         loggingIn = false;
                         return token.AccessToken;
                     }
@@ -58,7 +59,7 @@ namespace PeaceOfMind.ConsoleApp
                         loggingIn = false;
                         return token.AccessToken;
                     }
-                }               
+                }
             }
             return null;
         }
@@ -105,6 +106,7 @@ namespace PeaceOfMind.ConsoleApp
                         PressAnyKey();
                         break;
                     case 7:
+                        CreateTherapist();
                         PressAnyKey();
                         break;
                     case 8:
@@ -134,7 +136,7 @@ namespace PeaceOfMind.ConsoleApp
                 }
             }
         }
-        private AppUserModel FindExsistingUser()
+        private AppUserModel FindExistingUser()
         {
             Console.WriteLine("Please enter your email:");
             string email = Console.ReadLine();
@@ -212,7 +214,7 @@ namespace PeaceOfMind.ConsoleApp
         {
             var createdOfficePairs = CollectOfficeKeyPairs();
             var officeContent = new FormUrlEncodedContent(createdOfficePairs);
-            var createdOffice = _client.PostAsync($"https://localhost:44301/api/OfficeLocation", (officeContent)).Result;            
+            var createdOffice = _client.PostAsync($"https://localhost:44301/api/OfficeLocation", (officeContent)).Result;
             if (createdOffice.IsSuccessStatusCode)
             {
                 Console.WriteLine("The office location was created.");
@@ -250,7 +252,7 @@ namespace PeaceOfMind.ConsoleApp
            };
             return createOfficePairs;
         }
-        private void  DisplayAllOfficeLocations()
+        private void DisplayAllOfficeLocations()
         {
             Console.Clear();
             var offices = _client.GetAsync("https://localhost:44301/api/OfficeLocation").Result;
@@ -264,7 +266,7 @@ namespace PeaceOfMind.ConsoleApp
                     Console.WriteLine($" OfficeId: {office.OfficeLocationId}\n"
                         + $" {office.AddressNumber} {office.StreetName}, {office.City}, {office.State} \n"
                         + $" Therapists at this location: {office.TherapistCount}\n");
-                }                
+                }
             }
         }
         private void GetASpecificOfficeLocation()
@@ -322,9 +324,9 @@ namespace PeaceOfMind.ConsoleApp
                 var foundOffice = GetOfficeLocationById(officeId);
                 if (foundOffice != null)
                 {
-                    var updateOfficePairs= CollectOfficeKeyPairs();
+                    var updateOfficePairs = CollectOfficeKeyPairs();
                     var updateOfficeContent = new FormUrlEncodedContent(updateOfficePairs);
-                    var response = _client.PutAsync($"https://localhost:44301/api/OfficeLocation/{officeId}", updateOfficeContent).Result;                  
+                    var response = _client.PutAsync($"https://localhost:44301/api/OfficeLocation/{officeId}", updateOfficeContent).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         Console.Clear();
@@ -342,7 +344,7 @@ namespace PeaceOfMind.ConsoleApp
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("That office location does not exsist.");
+                    Console.WriteLine("That office location does not exist.");
                     PressAnyKey();
                 }
             }
@@ -375,18 +377,95 @@ namespace PeaceOfMind.ConsoleApp
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("That office location does not exsist.");
+                    Console.WriteLine("That office location does not exist.");
                     PressAnyKey();
                 }
 
             }
         }
-        public void PressAnyKey()
+
+        private List<KeyValuePair<string, string>> CollectTherapistKeyPairs()
         {
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadKey();
+            var model = new TherapistModel();
+            Console.WriteLine("Please enter the Last Name");
+            model.LastName = Console.ReadLine();
+            Console.WriteLine("Please enter the First Name");
+            model.FirstName = Console.ReadLine();
+            Console.WriteLine("Please enter the Gender");
+            model.Gender = Console.ReadLine();
+            Console.WriteLine("Please enter the License or Degree");
+            model.LicenseOrDegree = Console.ReadLine();
+            Console.WriteLine("Please enter the area of specialty this therapist is in (1-9)\n" 
+                + "1, Psychotherapy\n"
+                + "2, Anxiety\n"
+                + "3, Depression\n" 
+                + "4, Family\n"
+                + "5, Marriage\n"
+                + "6, Young_Adult\n"
+                + "7, Substance_Abuse\n"
+                + "8, Grief\n"
+                + "9, Trauma");
+            var response = int.Parse(Console.ReadLine());
+            switch (response)
+            {
+                case 1:
+                //model.AreaOfSpecialty
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+            }
+
             Console.Clear();
+            var serializedJson = JsonConvert.SerializeObject(model);
+            var createTherapistPairs = new List<KeyValuePair<string, string>>
+           {
+               new KeyValuePair<string, string>("LastName", model.LastName),
+               new KeyValuePair<string, string>("FirstName", model.FirstName),
+               new KeyValuePair<string, string>("Gender", model.Gender),
+               new KeyValuePair<string, string>("LicenseOrDegree", model.LicenseOrDegree),
+             //  new KeyValuePair<string, string>("AreaOfSpecialty", model.AreaOfSpecialty)
+           };
+            return createTherapistPairs;
         }
+        private void CreateTherapist()
+        {
+            var createdTherapistPairs = CollectTherapistKeyPairs();
+            var therapistContent = new FormUrlEncodedContent(createdTherapistPairs);
+            var createdTherapist = _client.PostAsync($"https://localhost:44301/api/Therapist", (therapistContent)).Result;
+            if (createdTherapist.IsSuccessStatusCode)
+            {
+                Console.WriteLine("The therapist was created.");
+            }
+            else
+            {
+                Console.WriteLine("The therapist could not be created.");
+            }
+        }
+
+           
+            
+            public void PressAnyKey()
+            {
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+        } 
     }
-}
+
+
 

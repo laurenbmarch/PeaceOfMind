@@ -26,7 +26,7 @@ namespace PeaceOfMind.Services
                     LastName = model.LastName,
                     FirstName = model.FirstName,
                     LicenseOrDegree = model.LicenseOrDegree,
-                    AreaOfSpecialty = model.AreaOfSpecialty
+                    AreaOfSpecialty = model.AreaOfSpecialty 
                 };
 
             using (var ctx = new ApplicationDbContext())
