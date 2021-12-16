@@ -135,7 +135,7 @@ namespace PeaceOfMind.Services
                         FirstName = t.FirstName,
                         LastName = t.LastName,
                         LicenseOrDegree = t.LicenseOrDegree,
-                        AreaOfSpecialty = t.AreaOfSpecialty,
+                        AreaOfSpecialty = t.AreaOfSpecialty.ToList(),
                         Gender = t.Gender
                     };
                 therapistModelList.Add(therapistModel);

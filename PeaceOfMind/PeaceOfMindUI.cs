@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PeaceOfMind.Data;
 using PeaceOfMind.Models;
 using PeaceOfMind.WebApi.Controllers;
 using PeaceOfMind.WebApi.Models;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace PeaceOfMind.ConsoleApp
 {
     class PeaceOfMindUI
-    {     
+    {
         private HttpClient _client = new HttpClient();
         public void Run()
         {
@@ -39,7 +40,7 @@ namespace PeaceOfMind.ConsoleApp
                         PressAnyKey();
                     }
                     else
-                    { 
+                    {
                         loggingIn = false;
                         return token.AccessToken;
                     }
@@ -58,7 +59,7 @@ namespace PeaceOfMind.ConsoleApp
                         loggingIn = false;
                         return token.AccessToken;
                     }
-                }               
+                }
             }
             return null;
         }
@@ -99,12 +100,14 @@ namespace PeaceOfMind.ConsoleApp
                         PressAnyKey();
                         break;
                     case 5:
+                        DeleteAnOfficeLocation();
                         PressAnyKey();
                         break;
                     case 6:
                         PressAnyKey();
                         break;
                     case 7:
+                        CreateTherapist();
                         PressAnyKey();
                         break;
                     case 8:
@@ -212,7 +215,7 @@ namespace PeaceOfMind.ConsoleApp
         {
             var createdOfficePairs = CollectOfficeKeyPairs();
             var officeContent = new FormUrlEncodedContent(createdOfficePairs);
-            var createdOffice = _client.PostAsync($"https://localhost:44301/api/OfficeLocation", (officeContent)).Result;            
+            var createdOffice = _client.PostAsync($"https://localhost:44301/api/OfficeLocation", (officeContent)).Result;
             if (createdOffice.IsSuccessStatusCode)
             {
                 Console.WriteLine("The office location was created.");
@@ -238,7 +241,7 @@ namespace PeaceOfMind.ConsoleApp
             Console.WriteLine("Please enter the Country that the office is located in:");
             model.Country = Console.ReadLine();
             Console.Clear();
-            var serializedJson = JsonConvert.SerializeObject(model);
+            // var serializedJson = JsonConvert.SerializeObject(model);
             var createOfficePairs = new List<KeyValuePair<string, string>>
            {
                new KeyValuePair<string, string>("AddressNumber", model.AddressNumber.ToString()),
@@ -250,7 +253,7 @@ namespace PeaceOfMind.ConsoleApp
            };
             return createOfficePairs;
         }
-        private void  DisplayAllOfficeLocations()
+        private void DisplayAllOfficeLocations()
         {
             Console.Clear();
             var offices = _client.GetAsync("https://localhost:44301/api/OfficeLocation").Result;
@@ -264,7 +267,7 @@ namespace PeaceOfMind.ConsoleApp
                     Console.WriteLine($" OfficeId: {office.OfficeLocationId}\n"
                         + $" {office.AddressNumber} {office.StreetName}, {office.City}, {office.State} \n"
                         + $" Therapists at this location: {office.TherapistCount}\n");
-                }                
+                }
             }
         }
         private void GetASpecificOfficeLocation()
@@ -322,9 +325,9 @@ namespace PeaceOfMind.ConsoleApp
                 var foundOffice = GetOfficeLocationById(officeId);
                 if (foundOffice != null)
                 {
-                    var updateOfficePairs= CollectOfficeKeyPairs();
+                    var updateOfficePairs = CollectOfficeKeyPairs();
                     var updateOfficeContent = new FormUrlEncodedContent(updateOfficePairs);
-                    var response = _client.PutAsync($"https://localhost:44301/api/OfficeLocation/{officeId}", updateOfficeContent).Result;                  
+                    var response = _client.PutAsync($"https://localhost:44301/api/OfficeLocation/{officeId}", updateOfficeContent).Result;
                     if (response.IsSuccessStatusCode)
                     {
                         Console.Clear();
@@ -381,6 +384,311 @@ namespace PeaceOfMind.ConsoleApp
 
             }
         }
+        private void DeleteAnOfficeLocation()
+        {
+            Console.Clear();
+            Console.WriteLine("Do you know the id of the office location that you want to update? ( y / n )");
+            string userInput = Console.ReadLine().ToLower();
+            Console.Clear();
+            if (userInput == "y")
+            {
+                Console.WriteLine("Please enter the office Id of the office you want to update:");
+                int officeId = int.Parse(Console.ReadLine());
+                var foundOffice = GetOfficeLocationById(officeId);
+                if (foundOffice != null)
+                {
+                    var response = _client.DeleteAsync($"https://localhost:44301/api/OfficeLocation/{officeId}").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office location was deleted.");
+                        PressAnyKey();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office could not be deleted.");
+                        PressAnyKey();
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("That office location does not exsist.");
+                    PressAnyKey();
+                }
+            }
+            if (userInput == "n")
+            {
+                Console.Clear();
+                DisplayAllOfficeLocations();
+                Console.WriteLine("\n\nPlease enter the office Id of the office you want to delete:");
+                int officeId = int.Parse(Console.ReadLine());
+                var foundOffice = GetOfficeLocationById(officeId);
+                if (foundOffice != null)
+                {
+
+                    var response = _client.DeleteAsync($"https://localhost:44301/api/OfficeLocation/{officeId}").Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office location was deleted.");
+                        PressAnyKey();
+
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("The office could not be deleted.");
+                        PressAnyKey();
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("That office location does not exsist.");
+                    PressAnyKey();
+                }
+            }
+        }
+        private List<KeyValuePair<string, string>> CollectTherapistKeyPairs()
+        {
+            Console.Clear();
+            Console.WriteLine("Please enter the first name of the therapist you wouldf like to add:");
+            string firstName = Console.ReadLine();
+            Console.WriteLine("Please emter the last name of therapist: ");
+            string lastName = Console.ReadLine();
+            Console.WriteLine("Please enter the therapists gender: ");
+            string gender = Console.ReadLine();
+            // Could impliment all of the therapists credentials
+            Console.WriteLine("Please enter one of the therapists Licenses or degrees");
+            string licenseOrDegrees = Console.ReadLine();
+            var areaOfSpecialities = CollectAreaOfSpecialities();
+            var therapistKeyValuePairs = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("LastName", lastName),
+                new KeyValuePair<string, string>("FirstName", firstName),
+                new KeyValuePair<string, string>("Gender", gender),
+                new KeyValuePair<string, string>("LicenseOrDegree", licenseOrDegrees),
+                new KeyValuePair<string, string>("AreaOfSpecialty", areaOfSpecialities.ToString()),
+            };
+            return therapistKeyValuePairs;
+        }
+        public void CreateTherapist()
+        {
+            var therapistKeyValuePairs = CollectTherapistKeyPairs();
+            var therapistContent = new FormUrlEncodedContent(therapistKeyValuePairs);
+            var createdOffice = _client.PostAsync($"https://localhost:44301/api/Therapist", (therapistContent)).Result;
+            if (createdOffice.IsSuccessStatusCode)
+            {
+                Console.WriteLine("The therapist was created.");
+            }
+            else
+            {
+                Console.WriteLine("The therapist could not be created.");
+            }
+        }
+        public List<string> CollectAreaOfSpecialities()
+        {
+            Console.Clear();
+            var listOfSpecialities = new List<string>();
+            Console.WriteLine("Please enter the number of the speciality you would like to add: \n"
+            + "1 = Psychotherapy,\n"
+            + "2 = Anxiety,\n"
+            + "3 = Depression,\n"
+            + "4 = Family,\n"
+            + "5 = Marriage,\n"
+            + "6 = Young_Adult,\n"
+            + "7 = Substance_Abuse\n "
+            + "8 = Grief\n"
+            + "9 = Trauma");
+            string areaOfSpecialty = Console.ReadLine().ToLower();
+            if (areaOfSpecialty == "psychotherapy")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "anxiety")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "depression")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "family")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "young adult")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "substance abuse")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "marriage")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "grief")
+                listOfSpecialities.Add(areaOfSpecialty);
+            if (areaOfSpecialty == "trauma")
+                listOfSpecialities.Add(areaOfSpecialty);
+        Console.Clear();
+            bool whileAdding = true;
+            while (whileAdding)
+            {
+                Console.Clear();
+                Console.WriteLine("Would you like to add another Area of speciality? ( y / n)");
+                string userResponse = Console.ReadLine().ToLower();
+                if (userResponse == "y")
+                {
+                    {
+                        Console.WriteLine("Please type the speciality you would like to add: \n"
+                     + "Psychotherapy,\n"
+                     + "Anxiety,\n"
+                     + "Depression,\n"
+                     + "Family,\n"
+                     + "Marriage,\n"
+                     + "Young_Adult,\n"
+                     + "Substance_Abuse\n"
+                     + "Grief\n"
+                     + "Trauma");
+                        string specialty = Console.ReadLine().ToLower();
+                        if (specialty == "psychotherapy")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "anxiety")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "depression")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "family")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "young adult")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "substance abuse")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "marriage")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "grief")
+                            listOfSpecialities.Add(specialty);
+                        if (specialty == "trauma")
+                            listOfSpecialities.Add(specialty);
+                    }
+                }
+                if (userResponse == "n")
+                {
+                    Console.Clear();
+                    Console.WriteLine("Your list of specialities has been created");
+                    whileAdding = false;
+                    return listOfSpecialities;
+                }
+            }
+            return null;
+        }
+        /*public List<AreaOfSpecialty> CollectAreaOfSpecialities()
+        {
+            Console.Clear();
+            var listOfSpecialities = new List<AreaOfSpecialty>();
+            Console.WriteLine("Please enter the number of the speciality you would like to add: \n"
+            + "1 = Psychotherapy,\n"
+            + "2 = Anxiety,\n"
+            + "3 = Depression,\n"
+            + "4 = Family,\n"
+            + "5 = Marriage,\n"
+            + "6 = Young_Adult,\n"
+            + "7 = Substance_Abuse\n "
+            + "8 = Grief\n"
+            + "9 = Trauma");
+            int areaOfSpeciality = int.Parse(Console.ReadLine());
+            switch (areaOfSpeciality)
+            {
+                case 1:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Psychotherapy);
+                    break;
+                case 2:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Depression);
+                    break;
+                case 3:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Anxiety);
+                    break;
+                case 4:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Family);
+                    break;
+                case 5:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Marriage);
+                    break;
+                case 6:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Young_Adult);
+                    break;
+                case 7:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Substance_Abuse);
+                    break;
+                case 8:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Grief);
+                    break;
+                case 9:
+                    listOfSpecialities.Add(Data.AreaOfSpecialty.Trauma);
+                    break;
+                default:
+                    Console.WriteLine("Please enter a valid option...");
+                    PressAnyKey();
+                    break;
+            }
+            Console.Clear();
+            bool whileAdding = true;
+            while (whileAdding)
+            {
+                Console.Clear();
+                Console.WriteLine("Would you like to add another Area of speciality? ( y / n)");
+                string userResponse = Console.ReadLine().ToLower();
+                if (userResponse == "y")
+                {
+                    {
+                        Console.WriteLine("Please enter the number of the speciality you would like to add: \n"
+                     + "1 = Psychotherapy,\n"
+                     + "2 = Anxiety,\n"
+                     + "3 = Depression,\n"
+                     + "4 = Family,\n"
+                     + "5 = Marriage,\n"
+                     + "6 = Young_Adult,\n"
+                     + "7 = Substance_Abuse\n"
+                     + "8 = Grief\n"
+                     + "9 = Trauma");
+                        int speciality = int.Parse(Console.ReadLine());
+                        switch (speciality)
+                        {
+                            case 1:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Psychotherapy);
+                                break;
+                            case 2:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Depression);
+                                break;
+                            case 3:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Anxiety);
+                                break;
+                            case 4:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Family);
+                                break;
+                            case 5:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Marriage);
+                                break;
+                            case 6:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Young_Adult);
+                                break;
+                            case 7:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Substance_Abuse);
+                                break;
+                            case 8:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Grief);
+                                break;
+                            case 9:
+                                listOfSpecialities.Add(Data.AreaOfSpecialty.Trauma);
+                                break;
+                            default:
+                                Console.WriteLine("Please enter a valid option...");
+                                PressAnyKey();
+                                break;
+                        }       
+                    }
+                }
+                        if (userResponse == "n")
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Your list of specialities has been created");
+                            whileAdding = false;
+                            return listOfSpecialities;
+                        }
+            }
+            return null;
+        }*/
         public void PressAnyKey()
         {
             Console.WriteLine("\nPress any key to continue...");
