@@ -16,8 +16,8 @@ namespace PeaceOfMind.Data
         public int RatingsId { get; set; }
         
         [ForeignKey(nameof(Therapist))]
-        [JsonIgnore]
         public int TherapistId { get; set; }        
+        [JsonIgnore]
         public virtual Therapist Therapist { get; set; }
 
         [Required]

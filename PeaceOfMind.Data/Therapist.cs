@@ -21,17 +21,16 @@ namespace PeaceOfMind.Data
         [Required]
         public string LicenseOrDegree { get; set; }
         [Required]
-        public string AreaOfSpecialty { get; set; }             
+        public List<string> AreaOfSpecialty { get; set; }             
         [JsonIgnore]
-        public virtual HashSet<OfficeLocation> ListOfOffices { get; set; }
+        public virtual ICollection<OfficeLocation> ListOfOffices { get; set; }
         public Therapist()
         {
             ListOfOffices = new HashSet<OfficeLocation>();
         }
-
-
         [JsonIgnore]
         public virtual List<Rating> Ratings {get; set;}
 
     }
+    
 }

@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4603874F-FAAA-430B-8467-DD39CE7A4C13}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PeaceOfMind.Models</RootNamespace>
-    <AssemblyName>PeaceOfMind.Models</AssemblyName>
+    <ProjectGuid>{05DB6019-22DF-41A9-8CCA-1E9541F44BAB}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>PeaceOfMind</RootNamespace>
+    <AssemblyName>PeaceOfMind</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,8 +37,13 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,25 +52,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppUserModel.cs" />
-    <Compile Include="GetTokenModel.cs" />
-    <Compile Include="OfficeLocationGetItem.cs" />
-    <Compile Include="OfficeLocationModel.cs" />
+    <Compile Include="PeaceOfMindUI.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RatingsGetItem.cs" />
-    <Compile Include="RatingsModel.cs" />
-    <Compile Include="TherapistGetItem.cs" />
-    <Compile Include="TherapistModel.cs" />
-    <Compile Include="UserTokenModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeaceOfMind.Data\PeaceOfMind.Data.csproj">
-      <Project>{51e52327-7d2b-42ea-85e0-314b11e7ce15}</Project>
+      <Project>{51E52327-7D2B-42EA-85E0-314B11E7CE15}</Project>
       <Name>PeaceOfMind.Data</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\PeaceOfMind.Models\PeaceOfMind.Models.csproj">
+      <Project>{4603874f-faaa-430b-8467-dd39ce7a4c13}</Project>
+      <Name>PeaceOfMind.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PeaceOfMind.WebApi\PeaceOfMind.WebApi.csproj">
+      <Project>{5effb9e5-a730-4585-a45c-66cca14ab66b}</Project>
+      <Name>PeaceOfMind.WebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

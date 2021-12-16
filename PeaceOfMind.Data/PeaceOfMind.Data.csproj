@@ -61,6 +61,22 @@
     <Compile Include="Migrations\202112030016477_OfficeLocationTherapists.Designer.cs">
       <DependentUpon>202112030016477_OfficeLocationTherapists.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112030155362_Thur2.cs" />
+    <Compile Include="Migrations\202112030155362_Thur2.Designer.cs">
+      <DependentUpon>202112030155362_Thur2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112100046183_TestMigration.cs" />
+    <Compile Include="Migrations\202112100046183_TestMigration.Designer.cs">
+      <DependentUpon>202112100046183_TestMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112100439024_UITest1.cs" />
+    <Compile Include="Migrations\202112100439024_UITest1.Designer.cs">
+      <DependentUpon>202112100439024_UITest1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112102340059_UITest2.cs" />
+    <Compile Include="Migrations\202112102340059_UITest2.Designer.cs">
+      <DependentUpon>202112102340059_UITest2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OfficeLocation.cs" />
     <Compile Include="OfficeLocationTherapists.cs" />
@@ -76,6 +92,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202112030016477_OfficeLocationTherapists.resx">
       <DependentUpon>202112030016477_OfficeLocationTherapists.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112030155362_Thur2.resx">
+      <DependentUpon>202112030155362_Thur2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112100046183_TestMigration.resx">
+      <DependentUpon>202112100046183_TestMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112100439024_UITest1.resx">
+      <DependentUpon>202112100439024_UITest1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112102340059_UITest2.resx">
+      <DependentUpon>202112102340059_UITest2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
