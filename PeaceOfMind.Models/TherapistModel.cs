@@ -27,6 +27,6 @@ namespace PeaceOfMind.Models
         public string LicenseOrDegree { get; set; }
         [Required]
         [JsonProperty("AreaOfSpecialty")]
-        public List<AreaOfSpecialty> AreaOfSpecialty { get; set; }
+        public List<string> AreaOfSpecialty { get; set; }
     }
 }
